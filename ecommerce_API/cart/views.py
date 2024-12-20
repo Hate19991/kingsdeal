@@ -1,15 +1,14 @@
-from django.shortcuts import render
+from rest_framework.views import APIView
 from rest_framework import status
-from rest_framework import viewsets
-from .models import Cart, CartItem  
-from rest_framework.response import Response
 from django.http import Http404
+from rest_framework.response import Response
+from .models import CartItem
 from .serializers import *
+from django.db.models import Q
+from django.db.models.functions import Lower
 
-# Create your views here.
-class CartViewSet(viewsets.ModelViewSet):
-    """
-    A viewset for viewing and editing user instances.
-    """
-    serializers_class = CreateCartSerializer
-    queryset = CartItem
+class Cart(APIView):
+    def get(self, request):
+        obj = CartItem.objects.all()
+        serializers = CartSerializer(obj, many=True)
+        return Response(serializers.data, status=status.HTTP_200_OK)
