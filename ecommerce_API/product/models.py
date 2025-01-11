@@ -38,3 +38,17 @@ class ProductImage(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='product_image', blank=True, null=True)
     
+class Event(models.Model):
+    event_code = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    event_name = models.CharField(max_length=12)
+    event_description = models.TextField()
+    event_start = models.DateTimeField(auto_now_add=True)
+    event_end = models.DateTimeField()
+    
+    class Meta:
+        ordering = ['event_start']
+
+        def __str__(self):
+            return self.name
+    

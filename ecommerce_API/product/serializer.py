@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category, Brand, Product, ProductImage
+from .models import Category, Brand, Product, ProductImage ,Event
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,3 +59,8 @@ class ProductSerializer(serializers.ModelSerializer):
         instance.category = validated_data.get("category", instance.category)
         instance.product_image = validated_data.get("product_image", instance.product_image)
         return instance
+    
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['event_code','event_name','event_description', 'event_start', 'event_end' , 'product']
